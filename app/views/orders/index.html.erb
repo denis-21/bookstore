@@ -1,0 +1,128 @@
+<h2 class="bg-info title_inner_page">Orders</h2>
+<div class="title_order">
+  <p>IN PROGRESS</p>
+</div>
+<div>
+  <table class="table table_order">
+    <thead>
+        <tr>
+          <th></th>
+          <th>Book</th>
+          <th>Price</th>
+          <th>QTY</th>
+          <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    <%if @in_progress %>
+        <%@in_progress.order_items.each do |item| %>
+            <tr>
+              <td>
+                <%=link_to item.book do %>
+                    <%= image_tag item.book.image.thumb,class: 'image_cart'%>
+                <%end%>
+              </td>
+              <td>
+                <p class="title_book"><%=link_to item.book.title,book_path(item.book) %></p>
+                <p><%=truncate item.book.description, length: 300 %></p>
+              </td>
+              <td class="vertical_align">$<%= item.book.price%></td>
+              <td class="vertical_align"><%= item.quantity%></td>
+              <td class="vertical_align">$<%= item.price%></td>
+            </tr>
+        <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<hr>
+<div>
+  <div class="col-sm-3 padding_0">
+    <%=link_to 'GO TO CART',show_cart_orders_path,class: 'btn btn-info' %>
+  </div>
+  <div class="col-sm-3 col-sm-offset-6 padding_0 text-right">
+   SUBTOTAL : <span class="subtotal">$<%= @in_progress.total_price if @in_progress %></span>
+  </div>
+</div>
+
+<div class="empty"></div>
+
+<div class="title_order">
+  <p>WAITING FOR PROCESSING</p>
+</div>
+<div>
+  <table class="table table_order">
+    <thead>
+    <tr>
+      <th>Number</th>
+      <th>Completed at</th>
+      <th>Total</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%@in_queue.each do |order| %>
+        <tr>
+          <td><%=link_to "R#{order.id}",order_path(order.id) %></td>
+          <td><%= order.completed_at.strftime("%d-%m-%Y") %></td>
+          <td>$<%= order.total_price + order.delivery.price  %></td>
+          <td><%=link_to "View",order_path(order.id) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="title_order">
+  <p>IN DELIVERY</p>
+</div>
+<div>
+  <table class="table table_order">
+    <thead>
+    <tr>
+      <th>Number</th>
+      <th>Completed at</th>
+      <th>Total</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%@in_delivery.each do |order| %>
+        <tr>
+          <td><%=link_to "R#{order.id}",order_path(order.id) %></td>
+          <td><%= order.completed_at.strftime("%d-%m-%Y") %></td>
+          <td>$<%= order.total_price + order.delivery.price  %></td>
+          <td><%=link_to "View",order_path(order.id) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="title_order">
+  <p>DELIVERED</p>
+</div>
+<div>
+  <table class="table table_order">
+    <thead>
+    <tr>
+      <th>Number</th>
+      <th>Completed at</th>
+      <th>Total</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%@delivered.each do |order| %>
+        <tr>
+          <td><%=link_to "R#{order.id}",order_path(order.id) %></td>
+          <td><%= order.completed_at.strftime("%d-%m-%Y") %></td>
+          <td>$<%= order.total_price + order.delivery.price  %></td>
+          <td><%=link_to "View",order_path(order.id) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+

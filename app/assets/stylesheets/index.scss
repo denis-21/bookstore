@@ -1,0 +1,169 @@
+// Place all the styles related to the index controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'bootstrap/theme';
+
+body {
+  padding-top: 60px;
+}
+.list-group {
+  margin-bottom: 0;
+}
+#search-form
+{
+  padding: 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+#search{
+  width: 185px;
+}
+.title_inner_page
+{
+  border-radius: 3px;
+  padding-left: 10px;
+  color: #31708f;
+  margin-bottom: 35px;
+  width: 100%;
+}
+a
+{
+  color: #2E2F30;
+}
+.book_title
+{
+  width: 100px;
+}
+.price
+{
+  width: 100px;
+}
+.book_price
+{
+  font-size: 20px;
+  font-weight: bold;
+}
+.add-to-cart input[type='number']
+{
+  width: 95px;
+}
+.add-to-cart >form
+{
+  float:right;
+}
+.wish_list
+{
+  float:right;
+}
+.book_description
+{
+  margin-top: 20px;
+}
+.float_left
+{
+  float:left;
+}
+.review
+{
+  margin-left: 60px;
+  padding-top: 22px;
+}
+.font_size_18
+{
+  font-size: 18px;
+}
+.padding_left_20px
+{
+  padding-left: 20px;
+}
+.remove_wishlist
+{
+  margin-left: 16px;
+}
+.exist_wishlist
+{
+  margin-top: 5px;
+}
+.image_cart
+{
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.padding_0
+{
+  padding: 0;
+}
+.margin_0
+{
+  margin: 0;
+}
+.margin_left_8
+{
+  margin-left: 8px;
+}
+.margin_top_7
+{
+  margin-top: 7px;
+}
+.margin_top_35
+{
+  margin-top: 35px;
+}
+.subtotal
+{
+  font-weight: bold;
+}
+.footer
+{
+  min-height: 100px;
+}
+.title_order
+{
+  border-bottom: 2px solid #000000;
+}
+.title_order >p
+{
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.table_order th
+{
+  text-transform: uppercase;
+  font-weight: normal;
+}
+.title_book
+{
+  font-size: 18px;
+  font-weight: bold;
+}
+.vertical_align
+{
+  vertical-align: middle!important;
+  font-weight: bold;
+}
+.empty
+{
+  min-height: 120px;
+}
+.shiping_padding
+{
+  padding-left: 146px;
+}
+.date_rating
+{
+  margin-left: 30px;
+}
+.uppercase_text{
+  text-transform: uppercase;
+}
+.font_weight_bold{
+  font-weight: bold;
+}
+.edit a{
+  color: #337ab7;
+  text-decoration: none;
+}

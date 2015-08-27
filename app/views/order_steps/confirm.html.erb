@@ -1,0 +1,93 @@
+<h2 class="bg-info title_inner_page">Checkout</h2>
+<%= render 'order_steps/steps' %>
+<h5 class="font_weight_bold">CONFIRM</h5><br>
+
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Billing address <small class="edit"><%= link_to "(edit)", wizard_path(:address)%></small></th>
+      <th>Shipping address <small class="edit"><%= link_to "(edit)", wizard_path(:address)%></small></th>
+      <th>Shipments <small class="edit"><%= link_to "(edit)", wizard_path(:delivery)%></small></th>
+      <th>Payment Information <small class="edit"><%= link_to "(edit)", wizard_path(:payment)%></small></th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+            <p><%=@billing_address.first_name%> <%=@billing_address.last_name%></p>
+            <p><%=@billing_address.address%></p>
+            <p><%=@billing_address.city%></p>
+            <p><%=@billing_address.country%></p>
+            <p><%=@billing_address.phone%></p>
+          </td>
+          <td>
+            <p><%=@shipping_address.first_name%> <%=@shipping_address.last_name%></p>
+            <p><%=@shipping_address.address%></p>
+            <p><%=@shipping_address.city%></p>
+            <p><%=@shipping_address.country%></p>
+            <p><%=@shipping_address.phone%></p>
+          </td>
+          <td>
+            <%= @current_order.delivery.name%>
+          </td>
+          <td>
+            <p><%= current_user.credit_card.mask%></p>
+            <p><%= current_user.credit_card.date%></p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<div>
+  <table class="table table_order">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Book</th>
+      <th>Price</th>
+      <th>QTY</th>
+      <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%@current_order.order_items.each do |item| %>
+        <tr>
+          <td>
+            <%=link_to item.book do %>
+                <%= image_tag item.book.image.thumb,class: 'image_cart'%>
+            <%end%>
+          </td>
+          <td>
+            <p class="title_book"><%=link_to item.book.title,book_path(item.book) %></p>
+            <p><%=truncate item.book.description, length: 300 %></p>
+          </td>
+          <td class="vertical_align">$<%= item.book.price%></td>
+          <td class="vertical_align"><%= item.quantity%></td>
+          <td class="vertical_align">$<%= item.price%></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<hr>
+<div>
+  <div class="col-sm-3 col-sm-offset-9 padding_0 text-right">
+    SUBTOTAL : <span class="subtotal">$<%=@current_order.total_price %></span>
+  </div>
+  <div class="col-sm-3 col-sm-offset-9 padding_0 shiping_padding">
+    SHIPPING : <span class="subtotal">$<%=@current_order.delivery.price %></span>
+  </div>
+</div>
+<br><br><hr>
+<div>
+  <div class="col-sm-3 col-sm-offset-9 padding_0 text-right">
+    ORDER TOTAL : <span class="subtotal">$<%=@current_order.total_price + @current_order.delivery.price %></span>
+  </div>
+</div>
+<div>
+    <%= link_to 'PLACE ORDER', wizard_path, method: :patch, class: 'btn btn-info'%>
+</div>

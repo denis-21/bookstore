@@ -1,0 +1,59 @@
+  <h3>
+    <%=@book.title%>
+
+    <p><small>by <%=  @book.author.first_name%> <%=  @book.author.last_name%></small></p>
+  </h3>
+
+  <div class="row single-book">
+    <div class="col-md-5">
+      <%= image_tag(@book.image,title: @book.title) %>
+    </div>
+    <div class="col-md-7">
+      <div class="row info">
+
+        <div class="col-md-6 book_price">$<%=@book.price%></div>
+
+
+        <div class="col-md-6 add-to-cart">
+          <%= form_tag(orders_path, :method => 'post') do %>
+              <%= hidden_field_tag(:book_id, @book.id) %>
+              <%= number_field_tag 'quantity', '1'%>
+              <%= button_tag  class: "btn btn-sm btn-success" do %>
+                 <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
+              <% end %>
+         <% end %>
+         <%= exist_in_wish_list(@book)%>
+        </div>
+
+      </div>
+
+      <div class="row book_description">
+        <div class="col-md-12">
+          <%=@book.description%>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <hr>
+  <h3 class="float_left">Reviews</h3> <%= link_to 'Add review for this book', new_book_rating_path(@book), method: :get, class: "btn review text-info" %>
+  <hr>
+  <div>
+    <% @ratings.each do |rating|%>
+        <div class="form-group">
+          <span class="star-rating">
+           <% (1..rating.rating).each do |value| %>
+                <%= radio_button_tag "rating_rating_number_#{rating.id}", value, true, disabled: true%>
+                <i></i>
+           <% end %>
+          </span>
+          <span class="date_rating"><small><%=rating.created_at.strftime("%B %d,%Y") %></small></span>
+        </div>
+        <div class="form-group">
+          <p>
+            <%= rating.review%>
+          </p>
+        </div>
+        <br>
+    <%end%>
+  </div>

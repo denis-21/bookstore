@@ -1,0 +1,26 @@
+<div class="row margin_0">
+  <ul class="nav nav-pills">
+  <%wizard_steps.to_enum.with_index(1) do |order_step, index|%>
+        <% if order_step.eql? step%>
+          <li class="active">
+            <%=link_to order_step, wizard_path(order_step),class:'active uppercase_text' %>
+          </li>
+        <%else%>
+          <%if session[order_step]%>
+              <li>
+                <%=link_to order_step, wizard_path(order_step),class:'uppercase_text' %>
+              </li>
+          <%else%>
+              <li>
+                <%=link_to order_step ,'',class:'uppercase_text' %>
+              </li>
+          <%end%>
+        <%end%>
+  <%end%>
+  </ul>
+</div>
+<br>
+
+
+
+

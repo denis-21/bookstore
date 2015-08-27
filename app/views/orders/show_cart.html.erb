@@ -1,0 +1,80 @@
+<h2 class="bg-info title_inner_page">Shopping Cart</h2>
+<%  unless @items_cart.empty?%>
+<%= form_tag(order_path(@current_order), :method => 'put') do%>
+    <div class="panel panel-info">
+        <div class="panel-body">
+              <%@items_cart.each do |item|%>
+                <%=fields_for "items_cart[]", item do |f|%>
+                   <div class="row">
+                     <div class="col-sm-2">
+                       <%=link_to item.book do %>
+                            <%= image_tag item.book.image.thumb,class: 'image_cart'%>
+                       <%end%>
+                     </div>
+                     <div class="col-sm-7">
+                        <h4>
+                          <strong>  <%=link_to item.book.title,book_path(item.book) %></strong>
+                        </h4>
+                       <h4>
+                         <small>  <%=truncate item.book.description, length: 200 %></small>
+                       </h4>
+                     </div>
+                     <div class="col-sm-3 margin_top_35">
+                       <div class="col-sm-3 text-right padding_0">
+                          <h6>
+                            <span>$<%= item.book.price%></span>
+                            <span class="text-muted">x</span>
+                          </h6>
+                       </div>
+                       <div class="col-sm-4 padding_0 margin_left_8" >
+                         <%= f.number_field :quantity, class: 'form-control input-sm'%>
+                       </div>
+                       <div class="col-sm-3  text-right padding_0">
+                         <h6>
+                           <span>$<%= item.price%></span>
+                         </h6>
+                       </div>
+                       <div class="col-sm-1 padding_0 margin_top_7">
+                        <%= link_to order_item_path(item), method: :delete, id: 'book-remove',
+                                    data: { confirm: 'Are you sure?' }, class: 'btn btn-link btn-xs' do %>
+                         <span class="glyphicon glyphicon-remove"></span>
+                        <%end%>
+                       </div>
+                     </div>
+                   </div>
+                <%end%>
+                  <hr>
+              <%end%>
+        </div>
+
+        <div class="panel-footer">
+          <h4 class="text-right">
+            Subtotal :
+            <span class="subtotal margin_left_8">$<%=@current_order.total_price %></span>
+          </h4>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <%=link_to 'EMPTY CART',order_path(@current_order),method: :delete,data: { confirm: 'EMPTY CART! Are you sure?' },class: 'btn btn-sm btn-danger' %>
+      </div>
+      <div class="col-sm-3">
+        <%=link_to 'CONTINUE SHOPPING',books_path,class: 'btn btn-sm btn-info' %>
+      </div>
+      <div class="col-sm-2 col-sm-offset-1">
+        <%=text_field_tag :discount,nil,placeholder: 'Coupon code',
+                          class: 'form-control input-sm'%>
+      </div>
+      <div class="col-sm-2">
+        <%=submit_tag 'UPDATE', class: 'btn btn-default btn-block'%>
+      </div>
+      <div class="col-sm-2">
+        <%=link_to 'CHECKOUT',order_steps_path,class: 'btn btn-block btn-success' %>
+      </div>
+    </div>
+<%end%>
+
+
+<% else%>
+    <p class="text-center"> Shopping cart is empty.</p>
+<% end%>

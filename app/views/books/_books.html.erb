@@ -1,0 +1,26 @@
+<% @books.in_groups_of(4, false) do |group|%>
+    <div class="row">
+      <% group.each do |book|
+      %>
+
+          <div class="col-sm-3">
+            <p>
+              <%= link_to book_path(book) do%>
+                  <%= image_tag(book.image.thumb,title: book.title, height: 150,width: 100) %>
+              <% end%>
+            </p>
+            <h5 class="book_title"><%= link_to truncate(book.title,length: 20),book %></h5>
+            <p class="price text-warning bg-warning text-center">$<%= book.price%></p>
+
+            <% if params[:controller] == 'books' && params[:action] == 'wishlist'%>
+                <%= link_to 'Remove',wish_list_book_path(book),method: :delete,class: 'btn btn-sm btn-danger remove_wishlist' %>
+            <% end%>
+
+          </div>
+      <%end %>
+    </div>
+    <br>
+<%end %>
+<div class="text-center">
+  <%= paginate @books %>
+</div>
