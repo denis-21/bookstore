@@ -46,6 +46,9 @@ gem 'rails_admin_aasm'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+group :development do
+  gem 'sqlite3'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
