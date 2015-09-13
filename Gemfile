@@ -36,6 +36,7 @@ gem 'rails_admin'
 gem 'haml-rails'
 gem 'wicked'
 gem 'rails_admin_aasm'
+gem 'taps'
 
 
 # Use ActiveModel has_secure_password
