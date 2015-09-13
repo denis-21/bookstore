@@ -28,5 +28,5 @@ test:
 production:
   <<: *default
   database: bookstore_prod
-  #username: root
- # password: root
+  username: root
+  password: root
