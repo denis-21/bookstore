@@ -29,7 +29,7 @@ class OrderStepsController < ApplicationController
         @order = current_user.orders.in_queue.last
         @shipping_address = @order.shipping_address
         @billing_address = @order.billing_address
-        [:billing_address, :shipping_address, :delivery, :payment, :confirm].
+        [:address, :shipping_address, :delivery, :payment, :confirm].
             each { |s| session.delete(s) }
 
     end
