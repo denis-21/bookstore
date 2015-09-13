@@ -21,11 +21,11 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li>
+          <% if user_signed_in? %>
           <%=link_to show_cart_orders_path do%>
               <span class="glyphicon glyphicon-shopping-cart"></span>
               Cart (<%=  cart_user.order_items.count%>)
           <% end %>
-        <% if user_signed_in? %>
             <li><%=link_to 'Orders',orders_path %></li>
             <li><%=link_to 'Wish list', wish_list_books_path%></li>
             <li><%=link_to 'Settings', edit_user_registration_path(current_user) %></li>
