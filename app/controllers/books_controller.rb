@@ -4,14 +4,13 @@ class BooksController < ApplicationController
 
   def index
     if params[:search]
-      @books = Book.search(params[:search]).page(params[:page])
+      @books = @books.search(params[:search]).page(params[:page])
     else
-      @books = Book.all.page(params[:page])
+      @books = @books.page(params[:page])
     end
   end
 
   def show
-    @book = Book.find(params[:id])
     @ratings = @book.ratings.approved
   end
 

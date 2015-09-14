@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource
+  load_resource :only => [:show,:update,:destroy]
+  authorize_resource
 
   def index
     orders = current_user.orders
@@ -10,7 +11,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+
   end
 
   def show_cart
@@ -27,14 +28,18 @@ class OrdersController < ApplicationController
 
 
   def update
-      order = Order.find(params[:id])
-      order.update_cart(params[:items_cart])
+      coupon = Coupon.active.find_by(name: params[:discount])
+      @order.update_cart(params[:items_cart],coupon)
+      if coupon
+        flash[:success] = 'Coupon code has been accepted'
+      else
+        flash[:warning] = 'Coupon not found' unless params[:discount].empty?
+      end
       redirect_to (:back)
   end
 
   def destroy
-    order = Order.find(params[:id])
-    order.destroy
+    @order.destroy
     flash[:warning] = 'Your shopping cart is emptied.'
     redirect_to (:back)
   end

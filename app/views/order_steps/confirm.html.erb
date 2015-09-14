@@ -15,18 +15,18 @@
     <tbody>
         <tr>
           <td>
-            <p><%=@billing_address.first_name%> <%=@billing_address.last_name%></p>
-            <p><%=@billing_address.address%></p>
-            <p><%=@billing_address.city%></p>
-            <p><%=@billing_address.country%></p>
-            <p><%=@billing_address.phone%></p>
+            <p><%=@step_form.billing_address.first_name%> <%=@step_form.billing_address.last_name%></p>
+            <p><%=@step_form.billing_address.address%></p>
+            <p><%=@step_form.billing_address.city%></p>
+            <p><%=@step_form.billing_address.country%></p>
+            <p><%=@step_form.billing_address.phone%></p>
           </td>
           <td>
-            <p><%=@shipping_address.first_name%> <%=@shipping_address.last_name%></p>
-            <p><%=@shipping_address.address%></p>
-            <p><%=@shipping_address.city%></p>
-            <p><%=@shipping_address.country%></p>
-            <p><%=@shipping_address.phone%></p>
+            <p><%=@step_form.shipping_address.first_name%> <%=@step_form.shipping_address.last_name%></p>
+            <p><%=@step_form.shipping_address.address%></p>
+            <p><%=@step_form.shipping_address.city%></p>
+            <p><%=@step_form.shipping_address.country%></p>
+            <p><%=@step_form.shipping_address.phone%></p>
           </td>
           <td>
             <%= @current_order.delivery.name%>
@@ -76,7 +76,7 @@
 <hr>
 <div>
   <div class="col-sm-3 col-sm-offset-9 padding_0 text-right">
-    SUBTOTAL : <span class="subtotal">$<%=@current_order.total_price %></span>
+    SUBTOTAL : <span class="subtotal">$<%=@current_order.discount_price %></span>
   </div>
   <div class="col-sm-3 col-sm-offset-9 padding_0 shiping_padding">
     SHIPPING : <span class="subtotal">$<%=@current_order.delivery.price %></span>
@@ -85,7 +85,7 @@
 <br><br><hr>
 <div>
   <div class="col-sm-3 col-sm-offset-9 padding_0 text-right">
-    ORDER TOTAL : <span class="subtotal">$<%=@current_order.total_price + @current_order.delivery.price %></span>
+    ORDER TOTAL : <span class="subtotal">$<%=@current_order.discount_price + @current_order.delivery.price %></span>
   </div>
 </div>
 <div>

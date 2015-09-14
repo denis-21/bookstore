@@ -4,8 +4,8 @@
     <div class="row">
       <div class="col-sm-4">
         <h5 class="font_weight_bold">PAYMENT</h5>
-        <%=render 'shared/error_msg', object: @credit_card%>
-        <%= fields_for :credit_card, @credit_card do |f| %>
+        <%=render 'shared/error_msg', object: @step_form.credit_card%>
+        <%= fields_for :credit_card, @step_form.credit_card do |f| %>
            <div class="form-group">
              <%= f.text_field :number, class: 'form-control', placeholder: 'Number'%>
            </div>
@@ -24,9 +24,9 @@
       </div>
       <div class="col-sm-4 col-sm-offset-4 text-right">
         <h5 class="font_weight_bold">ORDER SUMMARY</h5>
-        <p> ITEM TOTAL: <span class="subtotal">$<%=@current_order.total_price %></span></p>
+        <p> ITEM TOTAL: <span class="subtotal">$<%=@current_order.discount_price %></span></p>
         <p> SHIPPING: <span class="subtotal">$<%=@current_order.delivery.price %></span></p>
-        <p> ORDER TOTAL: <span class="subtotal">$<%=@current_order.total_price + @current_order.delivery.price %></span></p>
+        <p> ORDER TOTAL: <span class="subtotal">$<%=@current_order.discount_price + @current_order.delivery.price %></span></p>
       </div>
     </div>
     <div>

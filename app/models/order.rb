@@ -9,6 +9,7 @@ class Order < ActiveRecord::Base
   belongs_to :delivery
   belongs_to :billing_address, class_name: 'Address'
   belongs_to :shipping_address, class_name: 'Address'
+  belongs_to :coupon
 
 
   include AASM
@@ -53,7 +54,7 @@ class Order < ActiveRecord::Base
     recount_total_cart_price
   end
 
-  def update_cart (items)
+  def update_cart (items,coupon)
     items.each do |key, value|
       quantity = value[:quantity].to_i <= 0 ? 1 :value[:quantity].to_i
       item = self.order_items.find(key)
@@ -61,9 +62,12 @@ class Order < ActiveRecord::Base
       item.price = item.quantity * item.book.price
       item.save
     end
+    if coupon
+      self.coupon = coupon
+      self.save
+    end
     recount_total_cart_price
   end
-
 
   def recount_total_cart_price
     reload
@@ -72,14 +76,14 @@ class Order < ActiveRecord::Base
     self.save
   end
 
-  def create_delivery(delivery_id)
-    if delivery_id
-      self.update(delivery_id: delivery_id)
-      true
+  def discount_price
+    if self.coupon
+      total_price - total_price * (self.coupon.discount / 100.0)
     else
-      false
+      total_price
     end
   end
+
 
   def complete_date
     self.completed_at = Time.current

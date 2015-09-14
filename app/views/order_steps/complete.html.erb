@@ -1,4 +1,4 @@
-<h2 class="bg-info title_inner_page">Orders R<%=@order.id%></h2>
+<h2 class="bg-info title_inner_page">Orders R<%=@step_form.complete.id%></h2>
 
 <div>
   <table class="table">
@@ -13,21 +13,21 @@
     <tbody>
     <tr>
       <td>
-        <p><%=@billing_address.first_name%> <%=@billing_address.last_name%></p>
-        <p><%=@billing_address.address%></p>
-        <p><%=@billing_address.city%></p>
-        <p><%=@billing_address.country%></p>
-        <p><%=@billing_address.phone%></p>
+        <p><%=@step_form.billing_address.first_name%> <%=@step_form.billing_address.last_name%></p>
+        <p><%=@step_form.billing_address.address%></p>
+        <p><%=@step_form.billing_address.city%></p>
+        <p><%=@step_form.billing_address.country%></p>
+        <p><%=@step_form.billing_address.phone%></p>
       </td>
       <td>
-        <p><%=@shipping_address.first_name%> <%=@shipping_address.last_name%></p>
-        <p><%=@shipping_address.address%></p>
-        <p><%=@shipping_address.city%></p>
-        <p><%=@shipping_address.country%></p>
-        <p><%=@shipping_address.phone%></p>
+        <p><%=@step_form.shipping_address.first_name%> <%=@step_form.shipping_address.last_name%></p>
+        <p><%=@step_form.shipping_address.address%></p>
+        <p><%=@step_form.shipping_address.city%></p>
+        <p><%=@step_form.shipping_address.country%></p>
+        <p><%=@step_form.shipping_address.phone%></p>
       </td>
       <td>
-        <%= @order.delivery.name%>
+        <%= @step_form.complete.delivery.name%>
       </td>
       <td>
         <p><%= current_user.credit_card.mask%></p>
@@ -52,7 +52,7 @@
     </tr>
     </thead>
     <tbody>
-    <%@order.order_items.each do |item| %>
+    <%@step_form.complete.order_items.each do |item| %>
         <tr>
           <td>
             <%=link_to item.book do %>
@@ -74,16 +74,16 @@
 <hr>
 <div>
   <div class="col-sm-3 col-sm-offset-9 padding_0 text-right">
-    SUBTOTAL : <span class="subtotal">$<%=@order.total_price %></span>
+    SUBTOTAL : <span class="subtotal">$<%=@step_form.complete.total_price %></span>
   </div>
   <div class="col-sm-3 col-sm-offset-9 padding_0 shiping_padding">
-    SHIPPING : <span class="subtotal">$<%=@order.delivery.price %></span>
+    SHIPPING : <span class="subtotal">$<%=@step_form.complete.delivery.price %></span>
   </div>
 </div>
 <br><br><hr>
 <div>
   <div class="col-sm-3 col-sm-offset-9 padding_0 text-right">
-    ORDER TOTAL : <span class="subtotal">$<%=@order.total_price + @order.delivery.price %></span>
+    ORDER TOTAL : <span class="subtotal">$<%=@step_form.complete.discount_price + @step_form.complete.delivery.price %></span>
   </div>
 </div>
 <div>

@@ -8,10 +8,11 @@ class Ability
         can :dashboard
         can :manage, :all
       else
-        can [:index, :show, :add_to_cart, :add_to_wishlist, :wishlist,:delete_from_wishlist], Book
+        can [:index, :show,:add_to_wishlist, :wishlist,:delete_from_wishlist], Book
         can [:new, :create], Rating,     user: user
         can :read,   [Category, User]
-        can :manage, Order,     user: user
+        can [:destroy],OrderItem
+        can :manage, Order
       end
     else
       can :read, [Book, Category,Rating]

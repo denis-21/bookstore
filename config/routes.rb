@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   root 'books#index'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  devise_for :users, controllers: { omniauth_callbacks: 'auth_facebook' }
+  devise_for :users, controllers: { omniauth_callbacks: 'auth_facebook',registrations: 'registrations' }
 
   resources :books do
     resources :ratings, only: [:new, :create]

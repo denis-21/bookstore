@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :books
   has_many :orders
   has_many :ratings, dependent: :destroy
-  has_one :billing_address, class_name: "Address"
-  has_one :shipping_address, class_name: "Address"
+  belongs_to :billing_address, class_name: "Address"
+  belongs_to :shipping_address, class_name: "Address"
   has_one :credit_card,dependent: :destroy
 
 

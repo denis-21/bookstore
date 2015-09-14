@@ -1,56 +1,21 @@
 class OrderStepsController < ApplicationController
 
   before_filter :authenticate_user!
-
+  before_action :build_step_order, only: [:show, :update]
   include Wicked::Wizard
 
   steps :address, :delivery, :payment, :confirm, :complete
 
 
   def show
-    @current_order = cart_user
-    case step
-      when :address
-        @billing_address ||= @current_order.billing_address || current_user.billing_address || Address.new
-        @shipping_address ||= @current_order.shipping_address || current_user.shipping_address || Address.new
-      when :delivery
-        check_step
-        @deliveries = Delivery.all.order(:price)
-        @current_order.delivery ||= @deliveries.first
-      when :payment
-        check_step
-        @credit_card = current_user.credit_card || CreditCard.new
-      when :confirm
-        check_step
-        @shipping_address = @current_order.shipping_address
-        @billing_address = @current_order.billing_address
-      when :complete
-        check_step
-        @order = current_user.orders.in_queue.last
-        @shipping_address = @order.shipping_address
-        @billing_address = @order.billing_address
-        [:address, :shipping_address, :delivery, :payment, :confirm].
-            each { |s| session.delete(s) }
-
-    end
+    check_step unless step.eql?(:address)
+    [:address, :shipping_address, :delivery, :payment, :confirm].
+        each { |s| session.delete(s) } if step.eql?(:complete)
     render_wizard
   end
 
   def update
-    @current_order = cart_user
-
-    case step
-      when :address
-        result = create_address(@current_order,address_params(:billing_address),address_params(:shipping_address))
-      when :delivery
-         result = @current_order.create_delivery(delivery_params)
-      when :payment
-         result = create_payment(payment_params)
-      when :confirm
-        @current_order.submit!
-        result = true
-    end
-
+    result = @step_form.update(step,step_params)
     if result
       session[step.to_sym] = true
       redirect_to next_wizard_path
@@ -67,54 +32,18 @@ class OrderStepsController < ApplicationController
     end
 
 
-    def create_address (current_order,billing,shipping)
-      billing_address = current_order.billing_address
-      shipping_address = current_order.shipping_address
-      if billing_address && shipping_address
-          billing_address.update(billing)
-          shipping_address.update(shipping)
-      else
-        billing_address = Address.create(billing)
-        shipping_address = Address.create(shipping)
-      end
-      @billing_address = billing_address
-      @shipping_address = shipping_address
-      if @billing_address.valid? && @shipping_address.valid?
-        current_order.update(billing_address: @billing_address, shipping_address: @shipping_address)
-        true
-      else
-        false
-      end
-    end
+  def build_step_order
+    @current_order =cart_user
+    @step_form = OrderForm.new(@current_order)
+  end
 
-
-    def create_payment(payment)
-      credit_card = current_user.credit_card
-      if credit_card
-        credit_card.update(payment)
-      else
-        credit_card = CreditCard.create(payment)
-      end
-      @credit_card = credit_card
-      if @credit_card.save
-        true
-      else
-        false
-      end
-    end
-
-
-
-    def address_params(type)
-      params.require(type).permit(:first_name, :last_name, :address,:city, :country, :zipcode, :phone)
-    end
-
-    def delivery_params
-      params[:delivery] if Delivery.find(params[:delivery])
-    end
-
-    def payment_params
-      params.require(:credit_card).permit(:number, :cvv, :exp_month, :exp_year)
-    end
+  def step_params
+    params.permit(
+                  shipping_address: [:first_name, :last_name, :address,:city, :country, :zipcode, :phone],
+                  billing_address:  [:first_name, :last_name, :address,:city, :country, :zipcode, :phone],
+                  credit_card:      [:number, :cvv, :exp_month, :exp_year],
+                  delivery: [:id]
+                 )
+  end
 
 end

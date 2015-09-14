@@ -4,17 +4,17 @@
     <div class="row">
       <div class="col-sm-4">
         <h5 class="font_weight_bold">DELIVERY</h5>
-        <% @deliveries.each do |delivery| %>
-            <%= radio_button_tag('delivery', delivery.id, delivery == @current_order.delivery) %>
+        <% @step_form.delivery.each do |delivery| %>
+            <%= radio_button_tag('delivery[id]', delivery.id, delivery == @current_order.delivery) %>
             <%="#{delivery.name} + $#{delivery.price}"%>
             <br>
         <% end %>
       </div>
       <div class="col-sm-4 col-sm-offset-4 text-right">
         <h5 class="font_weight_bold">ORDER SUMMARY</h5>
-        <p> ITEM TOTAL: <span class="subtotal">$<%=@current_order.total_price %></span></p>
+        <p> ITEM TOTAL: <span class="subtotal">$<%=@current_order.discount_price %></span></p>
         <p> SHIPPING: <span class="subtotal">$<%=@current_order.delivery.price %></span></p>
-        <p> ORDER TOTAL: <span class="subtotal">$<%=@current_order.total_price + @current_order.delivery.price %></span></p>
+        <p> ORDER TOTAL: <span class="subtotal">$<%=@current_order.discount_price + @current_order.delivery.price %></span></p>
       </div>
     </div>
     <div>

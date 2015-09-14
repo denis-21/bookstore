@@ -4,23 +4,23 @@
     <div class="row">
       <div class="col-sm-4">
         <h5 class="font_weight_bold">BILLING ADDRESS</h5>
-        <%=render 'shared/error_msg', object: @billing_address%>
-        <%= fields_for :billing_address, @billing_address do |f| %>
+        <%=render 'shared/error_msg', object: @step_form.billing_address%>
+        <%= fields_for :billing_address, @step_form.billing_address do |f| %>
             <%= render 'order_steps/address_form',f: f %>
         <% end %>
 
       </div>
       <div class="col-sm-4">
         <h5 class="font_weight_bold">SHIPPING ADDRESS</h5>
-        <%=render 'shared/error_msg', object: @shipping_address%>
-        <%= fields_for :shipping_address, @shipping_address do |f| %>
+        <%=render 'shared/error_msg', object: @step_form.shipping_address%>
+        <%= fields_for :shipping_address, @step_form.shipping_address do |f| %>
             <%= render 'order_steps/address_form', f: f %>
         <% end %>
       </div>
       <div class="col-sm-4 text-right">
         <h5 class="font_weight_bold">ORDER SUMMARY</h5>
-        <p> ITEM TOTAL: <span class="subtotal">$<%=@current_order.total_price %></span></p>
-        <p> ORDER TOTAL: <span class="subtotal">$<%=@current_order.total_price %></span></p>
+        <p> ITEM TOTAL: <span class="subtotal">$<%=@current_order.discount_price %></span></p>
+        <p> ORDER TOTAL: <span class="subtotal">$<%=@current_order.discount_price %></span></p>
       </div>
     </div>
     <div>
