@@ -28,8 +28,9 @@ class OrdersController < ApplicationController
 
 
   def update
+       order = Order.find(params[:id])
       coupon = Coupon.active.find_by(name: params[:discount])
-      @order.update_cart(params[:items_cart],coupon)
+       order.update_cart(params[:items_cart],coupon)
       if coupon
         flash[:success] = 'Coupon code has been accepted'
       else
