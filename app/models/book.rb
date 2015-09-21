@@ -1,6 +1,6 @@
 class Book < ActiveRecord::Base
 
-    validates :title, :price, :stock, :author, :category, presence: true
+    validates :title, :price, :stock, :author, :category,:description, presence: true
     validates :price, numericality: { greater_than_or_equal_to: 0.01 }
 
 
