@@ -22,7 +22,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <% if user_signed_in? %>
-          <%=link_to show_cart_orders_path do%>
+          <%=link_to show_cart_path do%>
               <span class="glyphicon glyphicon-shopping-cart"></span>
               Cart (<%=  cart_user.order_items.count%>)
           <% end %>

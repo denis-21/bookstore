@@ -17,11 +17,11 @@ Rails.application.routes.draw do
   end
   resources :categories,  only: :show
   resources :order_items, only: [:destroy]
-  resources :orders do
-    get    'show_cart',  to: 'orders#show_cart',           on: :collection
-  end
+  resources :orders
   resources :order_steps, only: [:index,:show, :update]
 
 
+  post '/add_to_cart', to: 'orders#add_to_cart'
+  get    '/show_cart',  to: 'orders#show_cart'
 
 end

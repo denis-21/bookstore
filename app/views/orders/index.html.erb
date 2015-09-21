@@ -38,7 +38,7 @@
 <hr>
 <div>
   <div class="col-sm-3 padding_0">
-    <%=link_to 'GO TO CART',show_cart_orders_path,class: 'btn btn-info' %>
+    <%=link_to 'GO TO CART',show_cart_path,class: 'btn btn-info' %>
   </div>
   <div class="col-sm-3 col-sm-offset-6 padding_0 text-right">
    SUBTOTAL : <span class="subtotal">$<%= @in_progress.total_price if @in_progress %></span>

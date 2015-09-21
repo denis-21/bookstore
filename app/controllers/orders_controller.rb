@@ -1,13 +1,12 @@
 class OrdersController < ApplicationController
-  load_resource :only => [:show,:update,:destroy]
+  load_resource :only => [:index,:show,:update,:destroy]
   authorize_resource
 
   def index
-    orders = current_user.orders
-    @in_progress = orders.in_progress.first
-    @in_queue = orders.in_queue
-    @in_delivery = orders.in_delivery
-    @delivered = orders.delivered
+    @in_progress = @orders.in_progress.first
+    @in_queue = @orders.in_queue
+    @in_delivery = @orders.in_delivery
+    @delivered = @orders.delivered
   end
 
   def show
@@ -19,11 +18,11 @@ class OrdersController < ApplicationController
     @items_cart = @current_order.order_items
   end
 
-  def create
+  def add_to_cart
     book = Book.find(params[:book_id])
     current_order = cart_user
     current_order.add_item_to_cart(book,params[:quantity].to_i)
-    redirect_to show_cart_orders_path
+    redirect_to show_cart_path
   end
 
 
@@ -39,7 +38,7 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    order.destroy
+    @order.destroy
     flash[:warning] = 'Your shopping cart is emptied.'
     redirect_to (:back)
   end
