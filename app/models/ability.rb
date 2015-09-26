@@ -10,7 +10,7 @@ class Ability
       else
         can [:index, :show,:add_to_wishlist, :wishlist,:delete_from_wishlist], Book
         can [:new, :create], Rating,     user: user
-        can :read,   [Category]
+        can :read,   [Category,Rating]
         can [:destroy],OrderItem, order: user.orders.in_progress.first
         can :manage, Order,user: user
       end

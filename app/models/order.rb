@@ -5,7 +5,6 @@ class Order < ActiveRecord::Base
 
   has_many :order_items,dependent: :destroy
   belongs_to :user
-  belongs_to :credit_card
   belongs_to :delivery
   belongs_to :billing_address, class_name: 'Address'
   belongs_to :shipping_address, class_name: 'Address'
@@ -54,7 +53,7 @@ class Order < ActiveRecord::Base
     recount_total_cart_price
   end
 
-  def update_cart (items,coupon)
+  def update_cart (items,coupon=nil)
     items.each do |key, value|
       quantity = value[:quantity].to_i <= 0 ? 1 :value[:quantity].to_i
       item = self.order_items.find(key)

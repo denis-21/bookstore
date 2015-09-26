@@ -78,8 +78,8 @@ class OrderForm
       credit_card.update(payment)
     else
       credit_card = CreditCard.create(payment)
+      credit_card.user = @current_order.user
     end
-    credit_card
     if credit_card.save
       true
     else
