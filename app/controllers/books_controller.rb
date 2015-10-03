@@ -22,17 +22,20 @@ class BooksController < ApplicationController
     unless current_user.book_in_wishlist?(@book)
       current_user.add_to_wishlist(@book)
       flash[:success] = 'This book successfully added to Wish list'
-      redirect_to book_path(@book)
+    else
+      flash[:danger] = 'Book already exists at Wish list'
     end
+    redirect_to book_path(@book)
   end
 
   def delete_from_wishlist
     if current_user.book_in_wishlist?(@book)
       current_user.delete_from_wishlist(@book)
       flash[:warning] = "#{@book.title} successfully removed from Wish list"
-      redirect_to wish_list_books_path
+    else
+      flash[:danger] = 'Book is not at Wish list'
     end
-
+    redirect_to wish_list_books_path
   end
 
 end

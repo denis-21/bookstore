@@ -5,6 +5,10 @@ FactoryGirl.define do
     delivery
     user
     coupon nil
+
+    factory :order_complete_date do
+      completed_at Faker::Time.between(2.days.ago, Time.now, :all)
+    end
   end
 
 end

@@ -43,7 +43,12 @@ RSpec.describe Ability, type: :model do
         end
 
         context 'OrderItem' do
+
           it { expect(ability).to be_able_to(:destroy, OrderItem.new(order: user.orders.in_progress.first))}
+          it do
+            order_item = FactoryGirl.create(:order_item)
+            expect(ability).not_to be_able_to(:destroy, OrderItem.new(order: order_item.order))
+          end
           it { expect(ability).not_to be_able_to(:create, OrderItem.new) }
           it { expect(ability).not_to be_able_to(:edit, OrderItem.new) }
           it { expect(ability).not_to be_able_to(:read, OrderItem.new) }
