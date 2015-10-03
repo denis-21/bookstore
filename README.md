@@ -1,2 +1,2 @@
 
- bookstore
+Demo: bookstore
